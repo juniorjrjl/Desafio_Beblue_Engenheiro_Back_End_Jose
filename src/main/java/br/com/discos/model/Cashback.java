@@ -38,7 +38,7 @@ public class Cashback {
 	@NotNull
 	@Min(value = 0)
 	@Max(value = 100)
-	@Column(nullable = false)
+	@Column(nullable = false, precision = 5, scale  = 2)
 	private BigDecimal porcentagem;
 	
 	@NotNull

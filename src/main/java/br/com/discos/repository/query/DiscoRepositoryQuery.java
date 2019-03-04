@@ -8,7 +8,7 @@ import br.com.discos.dto.DiscoListagemDTO;
 
 public interface DiscoRepositoryQuery {
 
-	public Page<DiscoListagemDTO> listar(Pageable pagable, long idGenero) throws Exception;
+	public Page<DiscoListagemDTO> listar(Pageable pagable, long codigoGenero) throws Exception;
 	public DiscoDetalheDTO buscarPorCodigo(long codigo) throws Exception;
 	
 }

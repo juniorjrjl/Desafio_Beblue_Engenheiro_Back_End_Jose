@@ -57,14 +57,14 @@ public class VendaServiceTest {
 	@BeforeEach
 	public void setUp() throws Exception {
 		when(vendaRepository.buscarPorCodigo(1l)).thenReturn(new VendaDetalheDTO(1l, LocalDateTime.now()));
-		when(itemVendaRepository.buscarTotaisItemVenda(1l)).thenReturn(retornoTotails);
-		when(itemVendaRepository.listarItensVendaPorCodigoVenda(1l)).thenReturn(Stream.of(
+		when(itemVendaRepository.buscarTotaisItemVenda(Mockito.longThat(a -> a != 2l))).thenReturn(retornoTotails);
+		when(itemVendaRepository.listarItensVendaPorCodigoVenda(Mockito.longThat(a -> a != 2l))).thenReturn(Stream.of(
 				new ItemVendaDetalheDTO(1, 5l, new BigDecimal(49.89), new BigDecimal(7.3), 1l, "disco 1", 1l, DiaSemanaEnum.DOMINGO),
 				new ItemVendaDetalheDTO(1, 10l, new BigDecimal(19.71), new BigDecimal(1.06), 2l, "disco 2", 2l, DiaSemanaEnum.DOMINGO),
 				new ItemVendaDetalheDTO(1, 20l, new BigDecimal(9.56), new BigDecimal(0.05), 3l, "disco 3", 3l, DiaSemanaEnum.DOMINGO)
 				).collect(Collectors.toList()));
 		
-		when(vendaRepository.buscarPorCodigo(2l)).thenReturn(new VendaDetalheDTO(12l, LocalDateTime.now()));
+		when(vendaRepository.buscarPorCodigo(2l)).thenReturn(new VendaDetalheDTO(2l, LocalDateTime.now()));
 		when(itemVendaRepository.buscarTotaisItemVenda(2l)).thenReturn(null);
 		when(itemVendaRepository.listarItensVendaPorCodigoVenda(2l)).thenReturn(null);
 		
@@ -73,18 +73,6 @@ public class VendaServiceTest {
 					new VendaListagemDTO(3l, LocalDateTime.now()),
 					new VendaListagemDTO(4l, LocalDateTime.now())
 					).collect(Collectors.toList())));
-		when(itemVendaRepository.buscarTotaisItemVenda(3l)).thenReturn(retornoTotails);
-		when(itemVendaRepository.buscarTotaisItemVenda(4l)).thenReturn(retornoTotails);
-		when(itemVendaRepository.listarItensVendaPorCodigoVenda(3l)).thenReturn(Stream.of(
-				new ItemVendaDetalheDTO(1, 5l, new BigDecimal(49.89), new BigDecimal(7.3), 1l, "disco 1", 1l, DiaSemanaEnum.DOMINGO),
-				new ItemVendaDetalheDTO(1, 10l, new BigDecimal(19.71), new BigDecimal(1.06), 2l, "disco 2", 2l, DiaSemanaEnum.DOMINGO),
-				new ItemVendaDetalheDTO(1, 20l, new BigDecimal(9.56), new BigDecimal(0.05), 3l, "disco 3", 3l, DiaSemanaEnum.DOMINGO)
-				).collect(Collectors.toList()));
-		when(itemVendaRepository.listarItensVendaPorCodigoVenda(4l)).thenReturn(Stream.of(
-				new ItemVendaDetalheDTO(1, 5l, new BigDecimal(49.89), new BigDecimal(7.3), 1l, "disco 1", 1l, DiaSemanaEnum.DOMINGO),
-				new ItemVendaDetalheDTO(1, 10l, new BigDecimal(19.71), new BigDecimal(1.06), 2l, "disco 2", 2l, DiaSemanaEnum.DOMINGO),
-				new ItemVendaDetalheDTO(1, 20l, new BigDecimal(9.56), new BigDecimal(0.05), 3l, "disco 3", 3l, DiaSemanaEnum.DOMINGO)
-				).collect(Collectors.toList()));
 	}
 	
 	@Test

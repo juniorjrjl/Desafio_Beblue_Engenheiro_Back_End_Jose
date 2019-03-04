@@ -16,10 +16,10 @@ public class DiscoService {
 	@Autowired
 	private DiscoRepository discoRepository;
 	
-	public Page<DiscoListagemDTO> listar(@NonNull Pageable pagable, long idGenero) throws Exception{
+	public Page<DiscoListagemDTO> listar(@NonNull Pageable pagable, long codigoGenero) throws Exception{
 		Page<DiscoListagemDTO> dto = null;
 		try {
-			dto = discoRepository.listar(pagable, idGenero);
+			dto = discoRepository.listar(pagable, codigoGenero);
 		}catch (Exception e) {
 			throw e;
 		}

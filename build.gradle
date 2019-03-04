@@ -37,15 +37,20 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 	implementation "org.springframework.boot:spring-boot-starter-web"
 	implementation "org.flywaydb:flyway-core"
+	implementation "org.hibernate:hibernate-jpamodelgen"
+	
+	compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
 	compile "org.apache.commons:commons-lang3:3.8.1"
 	compileOnly "org.projectlombok:lombok"
+	
 	runtimeOnly "org.springframework.boot:spring-boot-devtools"
-	testCompile "com.h2database:h2"
 	runtimeOnly "mysql:mysql-connector-java"
+	
 	testImplementation ("org.springframework.boot:spring-boot-starter-test"){
 		exclude module: "junit"
 	}
-	implementation "org.hibernate:hibernate-jpamodelgen"
+	
+	testCompile "com.h2database:h2"
 	testCompile "org.mockito:mockito-core"
 	testCompile "org.mockito:mockito-junit-jupiter"		
 	testCompile "org.junit.jupiter:junit-jupiter-api:${junitVersion}"

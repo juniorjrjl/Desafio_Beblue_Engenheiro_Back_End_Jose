@@ -33,7 +33,7 @@ public class DiscoRepositoryQueryImpl implements DiscoRepositoryQuery {
 	private EntityManager entityManager;
 	
 	@Override
-	public Page<DiscoListagemDTO> listar(@NonNull Pageable pagable, long idGenero) throws Exception{
+	public Page<DiscoListagemDTO> listar(@NonNull Pageable pagable, long codigoGenero) throws Exception{
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<DiscoListagemDTO> criteria = builder.createQuery(DiscoListagemDTO.class);
 		Root<Disco> root = criteria.from(Disco.class);
@@ -42,9 +42,9 @@ public class DiscoRepositoryQueryImpl implements DiscoRepositoryQuery {
 				root.get(Disco_.nome), 
 				root.get(Disco_.preco)));
 		Predicate[] predicates = null;
-		if (idGenero > 0){
+		if (codigoGenero > 0){
 			predicates = new Predicate[1];
-			predicates[0] = builder.equal(root.get(Disco_.genero).get(Genero_.codigo), idGenero);
+			predicates[0] = builder.equal(root.get(Disco_.genero).get(Genero_.codigo), codigoGenero);
 			criteria.where(predicates);
 		}
 		criteria.orderBy(builder.asc(root.get(Disco_.nome)));
@@ -55,7 +55,7 @@ public class DiscoRepositoryQueryImpl implements DiscoRepositoryQuery {
 			montarPaginacao(query, pagable);
 			dto = query.getResultList();
 		}catch (Exception e) {
-			log.error("Erro ao buscar lista de discos pelo genero {} na pagina {} de tamanho {}", idGenero, pagable.getPageNumber(), pagable.getPageSize());
+			log.error("Erro ao buscar lista de discos pelo genero {} na pagina {} de tamanho {}", codigoGenero, pagable.getPageNumber(), pagable.getPageSize());
 			log.error(ExceptionUtils.getStackTrace(e));
 		}
 		return new PageImpl<DiscoListagemDTO>(dto, pagable, verificarTotalRegistrosQuery(predicates));
