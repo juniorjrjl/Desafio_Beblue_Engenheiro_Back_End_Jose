@@ -13,7 +13,6 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.discos.dto.ItemVendaDetalheDTO;
-import br.com.discos.dto.ItemVendaRegistradaDTO;
 import br.com.discos.dto.TotalItemVendaDTO;
 import br.com.discos.model.Cashback_;
 import br.com.discos.model.Disco_;
@@ -47,34 +46,6 @@ public class ItemVendaRepositoryQueryImpl implements ItemVendaRepositoryQuery {
 		criteria.orderBy(builder.asc(root.get(ItemVenda_.disco).get(Disco_.nome)));
 		TypedQuery<ItemVendaDetalheDTO> query = null;
 		List<ItemVendaDetalheDTO> dto = new ArrayList<ItemVendaDetalheDTO>();
-		try {
-			query = entityManager.createQuery(criteria);
-			dto = query.getResultList();
-		}catch (Exception e) {
-			log.error("Erro ao buscar os itens da venda {}", codigoVenda);
-			log.error(ExceptionUtils.getStackTrace(e));
-		}
-		return dto;
-	}
-
-	@Override
-	public List<ItemVendaRegistradaDTO> listarItensVendaRecemRegistrada(long codigoVenda) throws Exception{
-		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-		CriteriaQuery<ItemVendaRegistradaDTO> criteria = builder.createQuery(ItemVendaRegistradaDTO.class);
-		Root<ItemVenda> root = criteria.from(ItemVenda.class);
-		criteria.select(builder.construct(ItemVendaRegistradaDTO.class, 
-				root.get(ItemVenda_.codigo), 
-				root.get(ItemVenda_.quantidade), 
-				root.get(ItemVenda_.valorUnitario),
-				root.get(ItemVenda_.porcentagemCashback),
-				root.get(ItemVenda_.disco).get(Disco_.codigo),
-				root.get(ItemVenda_.disco).get(Disco_.nome),
-				root.get(ItemVenda_.cashback).get(Cashback_.codigo),
-				root.get(ItemVenda_.cashback).get(Cashback_.dia)));
-		criteria.where(builder.equal(root.get(ItemVenda_.venda).get(Venda_.codigo), codigoVenda));
-		criteria.orderBy(builder.asc(root.get(ItemVenda_.disco).get(Disco_.nome)));
-		TypedQuery<ItemVendaRegistradaDTO> query = null;
-		List<ItemVendaRegistradaDTO> dto = new ArrayList<ItemVendaRegistradaDTO>();
 		try {
 			query = entityManager.createQuery(criteria);
 			dto = query.getResultList();

@@ -19,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import br.com.discos.dto.ItemVendaDetalheDTO;
-import br.com.discos.dto.ItemVendaRegistradaDTO;
 import br.com.discos.dto.TotalItemVendaDTO;
 import br.com.discos.model.Cashback;
 import br.com.discos.model.Disco;
@@ -108,36 +107,6 @@ public class ItemVendaRepositoryQueryImplTest {
 	@Test
 	public void quandoInformadoCodigoVendaInexistente_RetornarNulo() throws Exception {
 		assertTrue(itemVendaRepository.listarItensVendaPorCodigoVenda(vendas.get(vendas.size() - 1).getCodigo() + 1).isEmpty());
-	}
-	
-	@Test
-	public void buscandoItensVendaRecemRegistrada() throws Exception {
-		Venda vendaBaseTeste = vendas.get(0);
-		List<ItemVendaRegistradaDTO> dto = itemVendaRepository.listarItensVendaRecemRegistrada(vendaBaseTeste.getCodigo());
-		assertEquals(vendaBaseTeste.getItensVenda().size(), dto.size());
-		dto.forEach(d ->{
-			ItemVenda itemBaseTeste = vendaBaseTeste.getItensVenda().stream().filter(f -> f.getCodigo() == d.getCodigo()).findFirst().get();
-			Disco discoBaseTeste = discos.stream().filter(f -> f.getCodigo() == itemBaseTeste.getDisco().getCodigo()).findFirst().get();
-			Cashback cashbackBaseTeste = cashbacks.stream().filter(f -> f.getCodigo() == itemBaseTeste.getCashback().getCodigo()).findFirst().get();
-			BigDecimal valorTotalItem = itemBaseTeste.getValorUnitario().multiply(new BigDecimal(itemBaseTeste.getQuantidade())).setScale(2, RoundingMode.HALF_DOWN);
-			assertEquals(itemBaseTeste.getCodigo(), d.getCodigo());
-			assertEquals(itemBaseTeste.getQuantidade(), d.getQuantidade());
-			assertEquals(itemBaseTeste.getValorUnitario(), d.getValorUnitario());
-			assertEquals(itemBaseTeste.getPorcentagemCashback(), d.getPorcentagemCashback());
-			assertEquals(discoBaseTeste.getCodigo(), d.getCodigoDisco());
-			assertEquals(discoBaseTeste.getNome(), d.getNomeDisco());
-			assertEquals(cashbackBaseTeste.getCodigo(), d.getCodigoCashback());
-			assertEquals(cashbackBaseTeste.getDia(), d.getDia());
-			assertEquals(valorTotalItem, d.getValorTotal());
-			assertEquals(itemBaseTeste.getPorcentagemCashback().multiply(valorTotalItem).divide(new BigDecimal(100)).setScale(2, RoundingMode.HALF_DOWN), d.getValorCashback());
-		});
-		List<ItemVendaRegistradaDTO> listaComparacao = dto.stream().sorted(Comparator.comparing(ItemVendaRegistradaDTO::getNomeDisco)).collect(Collectors.toList());
-		assertEquals(listaComparacao, dto);
-	}
-	
-	@Test
-	public void quandoInformadoCodigoVendaRecemRegistradaInexistente_RetornarNulo() throws Exception {
-		assertTrue(itemVendaRepository.listarItensVendaRecemRegistrada(vendas.get(vendas.size() - 1).getCodigo() + 1).isEmpty());
 	}
 	
 	@Test
