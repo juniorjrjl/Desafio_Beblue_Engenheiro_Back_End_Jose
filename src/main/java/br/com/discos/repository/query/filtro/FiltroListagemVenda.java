@@ -1,8 +1,6 @@
 package br.com.discos.repository.query.filtro;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,9 +14,7 @@ import lombok.ToString;
 @ToString
 public class FiltroListagemVenda {
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime dataInicial = null;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime dataFinal = null;
+	private LocalDate dataInicial = null;
+	private LocalDate dataFinal = null;
 	
 }

@@ -50,7 +50,7 @@ public class V201903051052__CriacaoTabelasProjetoInsercaoCashbacks extends BaseJ
 	
 	private final String TABELA_VENDAS = "create table vendas (\r\n" + 
 			"    codigo bigint not null auto_increment,\r\n" + 
-			"    data_hora_venda timestamp not null,\r\n" + 
+			"    data date not null,\r\n" + 
 			"    primary key (codigo)\r\n" + 
 			");";
 	
@@ -72,10 +72,10 @@ public class V201903051052__CriacaoTabelasProjetoInsercaoCashbacks extends BaseJ
 		  + "  from generos"
 		  + " where nome = ?";
 	
-	private final String POP = "POP";
-	private final String MPB = "MPB";
-	private final String CLASSIC = "CLASSIC";
-	private final String ROCK = "ROCK";
+	private final String POP = "pop";
+	private final String MPB = "mpb";
+	private final String CLASSICAL = "classical";
+	private final String ROCK = "rock";
 	
 	@Override
 	public void migrate(Context context) throws Exception {
@@ -90,7 +90,7 @@ public class V201903051052__CriacaoTabelasProjetoInsercaoCashbacks extends BaseJ
 		template.execute(FK_ITENS_VENDAS_CASHBACKS);
 		template.execute(FK_ITENS_VENDAS_DISCOS);
 		template.execute(FK_ITENS_VENDAS_VENDAS);
-		List<String> generos = Arrays.asList(POP, MPB, CLASSIC, ROCK);
+		List<String> generos = Arrays.asList(POP, MPB, CLASSICAL, ROCK);
 		generos.forEach(g -> {
 			try {
 				template.execute(INSERT_GENEROS, g);
@@ -127,7 +127,7 @@ public class V201903051052__CriacaoTabelasProjetoInsercaoCashbacks extends BaseJ
 	}
 	
 	private void inserirCashbackClassic(JdbcTemplate template) throws Exception {
-		long idGenero = template.queryForInt(SELECT_GENEROS, CLASSIC);
+		long idGenero = template.queryForInt(SELECT_GENEROS, CLASSICAL);
 		template.execute(INSERT_CASHBACKS, new BigDecimal(35).setScale(2, RoundingMode.HALF_DOWN), DiaSemanaEnum.DOMINGO.getCodigo(), idGenero);
 		template.execute(INSERT_CASHBACKS, new BigDecimal(3).setScale(2, RoundingMode.HALF_DOWN), DiaSemanaEnum.SEGUNDA.getCodigo(), idGenero);
 		template.execute(INSERT_CASHBACKS, new BigDecimal(5).setScale(2, RoundingMode.HALF_DOWN), DiaSemanaEnum.TERCA.getCodigo(), idGenero);

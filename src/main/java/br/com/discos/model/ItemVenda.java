@@ -11,9 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,31 +34,22 @@ public class ItemVenda implements Serializable{
 	private long codigo;
 	
 	@Column(nullable = false)
-	@Min(value = 1)
 	private long quantidade;
 	
-	@NotNull
-	@Min(value = 0)
 	@Column(nullable = false, precision = 10, scale  = 2)
 	private BigDecimal valorUnitario;
 	
-	@NotNull
-	@Min(value = 0)
-	@Max(value = 100)
 	@Column(nullable = false, precision = 10, scale  = 2)
 	private BigDecimal porcentagemCashback;
 	
-	@NotNull
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "codigo_venda", nullable = false)
 	private Venda venda = new Venda();
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_disco", nullable = false)
 	private Disco disco = new Disco();
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_cashback", nullable = false)
 	private Cashback cashback = new Cashback();

@@ -1,18 +1,31 @@
 package br.com.discos.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString(exclude = {"itensVenda"})
 @NoArgsConstructor
 @Getter @Setter
 public class VendaCadastroDTO {
 
-	public LocalDateTime dataHora;
-	public List<ItemVendaCadastroDTO> itemVenda = new ArrayList<ItemVendaCadastroDTO>(); 
+	@NotNull
+	public LocalDate data;
+	
+	@NotNull
+	@Size(min = 1)
+	@Valid
+	public List<ItemVendaCadastroDTO> itensVenda = new ArrayList<ItemVendaCadastroDTO>(); 
 	
 }

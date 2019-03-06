@@ -14,9 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,17 +34,12 @@ public class Disco {
 	@Column
 	private long codigo;
 	
-	@Size(min = 1, max = 200)
-	@NotNull
 	@Column(nullable = false, length = 200)
 	private String nome;
 	
-	@NotNull
-	@Min(value = 0)
 	@Column(nullable = false, precision = 10, scale  = 2)
 	private BigDecimal preco;
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_genero", nullable = false)
 	private Genero genero = new Genero();

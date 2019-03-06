@@ -39,24 +39,24 @@ public class VendaRepositoryQueryImpl implements VendaRepositoryQuery {
 		Root<Venda> root = criteria.from(Venda.class);
 		criteria.select(builder.construct(VendaListagemDTO.class, 
 				root.get(Venda_.codigo), 
-				root.get(Venda_.dataHoraVenda)));
+				root.get(Venda_.data)));
 		Predicate[] predicates = null;
 		if (filtro.getDataInicial() != null && filtro.getDataFinal() != null){
 			predicates = new Predicate[1];
-			predicates[0] = builder.between(root.get(Venda_.dataHoraVenda), filtro.getDataInicial(), filtro.getDataFinal());
+			predicates[0] = builder.between(root.get(Venda_.data), filtro.getDataInicial(), filtro.getDataFinal());
 			criteria.where(predicates);
 		}else {
 			if (filtro.getDataInicial() != null) {
 				predicates = new Predicate[1];
-				predicates[0] = builder.greaterThanOrEqualTo(root.get(Venda_.dataHoraVenda), filtro.getDataInicial());
+				predicates[0] = builder.greaterThanOrEqualTo(root.get(Venda_.data), filtro.getDataInicial());
 				criteria.where(predicates);
 			}else if (filtro.getDataFinal() != null) {
 				predicates = new Predicate[1];
-				predicates[0] = builder.lessThanOrEqualTo(root.get(Venda_.dataHoraVenda), filtro.getDataFinal());
+				predicates[0] = builder.lessThanOrEqualTo(root.get(Venda_.data), filtro.getDataFinal());
 				criteria.where(predicates);
 			}
 		}
-		criteria.orderBy(builder.desc(root.get(Venda_.dataHoraVenda)));
+		criteria.orderBy(builder.desc(root.get(Venda_.data)));
 		TypedQuery<VendaListagemDTO> query = null;
 		List<VendaListagemDTO> dto = new ArrayList<VendaListagemDTO>();
 		try {
@@ -78,7 +78,7 @@ public class VendaRepositoryQueryImpl implements VendaRepositoryQuery {
 		Root<Venda> root = criteria.from(Venda.class);
 		criteria.select(builder.construct(VendaDetalheDTO.class, 
 				root.get(Venda_.codigo), 
-				root.get(Venda_.dataHoraVenda)));
+				root.get(Venda_.data)));
 		criteria.where(builder.equal(root.get(Venda_.codigo), codigo));
 		TypedQuery<VendaDetalheDTO> query = null;
 		VendaDetalheDTO dto = new VendaDetalheDTO();

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -83,9 +83,9 @@ public class VendaRepositoryQueryImplTest {
 
 	static Stream<FiltroListagemVenda> filtroQuery(){
 		return Stream.of(
-					new FiltroListagemVenda(LocalDateTime.of(2019, 1, 13, 0, 0, 0), LocalDateTime.of(2019, 1, 25, 0, 0, 0)), 
-					new FiltroListagemVenda(LocalDateTime.of(2019, 1, 13, 0, 0, 0), null), 
-					new FiltroListagemVenda(null, LocalDateTime.of(2019, 1, 25, 0, 0, 0)),
+					new FiltroListagemVenda(LocalDate.of(2019, 1, 13), LocalDate.of(2019, 1, 25)), 
+					new FiltroListagemVenda(LocalDate.of(2019, 1, 13), null), 
+					new FiltroListagemVenda(null, LocalDate.of(2019, 1, 25)),
 					new FiltroListagemVenda()
 				);
 	}
@@ -100,13 +100,13 @@ public class VendaRepositoryQueryImplTest {
 		assertEquals(tamanho, dto.getSize());
 		dto.forEach(d -> {
 			if (filtro.getDataInicial() != null) {
-				assertTrue(d.getDataHoraVenda().isAfter(filtro.getDataInicial()) || d.getDataHoraVenda().isEqual(filtro.getDataInicial()));
+				assertTrue(d.getData().isAfter(filtro.getDataInicial()) || d.getData().isEqual(filtro.getDataInicial()));
 			}
 			if (filtro.getDataFinal() != null) {
-				assertTrue(d.getDataHoraVenda().isBefore(filtro.getDataFinal()) || d.getDataHoraVenda().isEqual(filtro.getDataFinal()));
+				assertTrue(d.getData().isBefore(filtro.getDataFinal()) || d.getData().isEqual(filtro.getDataFinal()));
 			}
 		});
-		List<VendaListagemDTO> listaComparacao = dto.getContent().stream().sorted(Comparator.comparing(VendaListagemDTO::getDataHoraVenda).reversed()).collect(Collectors.toList());
+		List<VendaListagemDTO> listaComparacao = dto.getContent().stream().sorted(Comparator.comparing(VendaListagemDTO::getData).reversed()).collect(Collectors.toList());
 		assertEquals(listaComparacao, dto.getContent());
 	}
 	
@@ -114,7 +114,7 @@ public class VendaRepositoryQueryImplTest {
 	public void quandoBuscarVendaExistente_Retornar() throws Exception {
 		Venda vendaBaseTeste = vendas.get(0);
 		VendaDetalheDTO dto = vendaRepository.buscarPorCodigo(vendaBaseTeste.getCodigo());
-		assertEquals(vendaBaseTeste.getDataHoraVenda(), dto.getDataHoraVenda());
+		assertEquals(vendaBaseTeste.getData(), dto.getData());
 	}
 	
 	@Test

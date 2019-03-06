@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -53,12 +53,12 @@ public class VendaResourceTest {
 	
 	private MockMvc mockMvc;
 
-	private VendaDetalheDTO retornoVendaDetalhe = new VendaDetalheDTO(1l, LocalDateTime.of(2019, Month.MARCH, 20, 10, 00, 00));
+	private VendaDetalheDTO retornoVendaDetalhe = new VendaDetalheDTO(1l, LocalDate.of(2019, Month.MARCH, 20));
 	private ItemVendaDetalheDTO itemVenda = new ItemVendaDetalheDTO(1l, 1, new BigDecimal(100).setScale(2, RoundingMode.HALF_DOWN), new BigDecimal(10).setScale(2, RoundingMode.HALF_DOWN), 1, "disco 1", 1, DiaSemanaEnum.SEXTA);
 	
 	private Page<VendaListagemDTO> retornoVendaLista = new PageImpl<VendaListagemDTO>(Stream.of(
-			new VendaListagemDTO(1l, LocalDateTime.of(2019, Month.MARCH, 20, 10, 00, 00)),
-			new VendaListagemDTO(2l, LocalDateTime.of(2019, Month.APRIL, 01, 12, 30, 00))
+			new VendaListagemDTO(1l, LocalDate.of(2019, Month.MARCH, 20)),
+			new VendaListagemDTO(2l, LocalDate.of(2019, Month.APRIL, 01))
 			).collect(Collectors.toList()));
 	
 	@BeforeEach
@@ -96,7 +96,7 @@ public class VendaResourceTest {
 				.andExpect(status().isOk())
 				.andReturn();
 		assertEquals(String.format(jsonEsperado, retornoVendaDetalhe.getCodigo(), 
-				retornoVendaDetalhe.getDataHoraVenda().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 
+				retornoVendaDetalhe.getData().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
 				retornoVendaDetalhe.getValorTotal().toString(), 
 				retornoVendaDetalhe.getValorCashback().toString(),
 				itemVenda.getCodigo(),
@@ -131,9 +131,9 @@ public class VendaResourceTest {
 	static Stream<FiltroListagemVenda> parametros(){
 		return Stream.of(
 				new FiltroListagemVenda(),
-				new FiltroListagemVenda(null, LocalDateTime.now()),
-				new FiltroListagemVenda(LocalDateTime.now(), null),
-				new FiltroListagemVenda(LocalDateTime.now(), LocalDateTime.now()));
+				new FiltroListagemVenda(null, LocalDate.now()),
+				new FiltroListagemVenda(LocalDate.now(), null),
+				new FiltroListagemVenda(LocalDate.now(), LocalDate.now()));
 	}
 	
 	@DisplayName("verificando retorno lista vendas")
@@ -152,8 +152,8 @@ public class VendaResourceTest {
 		String jsonRetorno = result.getResponse().getContentAsString();
 		assertTrue(jsonRetorno.contains(String.format("\"codigo\":%s", dto.get(0).getCodigo())));
 		assertTrue(jsonRetorno.contains(String.format("\"codigo\":%s", dto.get(1).getCodigo())));
-		assertTrue(jsonRetorno.contains(String.format("\"dataHoraVenda\":\"%s\"", dto.get(0).getDataHoraVenda().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))));
-		assertTrue(jsonRetorno.contains(String.format("\"dataHoraVenda\":\"%s\"", dto.get(1).getDataHoraVenda().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))));
+		assertTrue(jsonRetorno.contains(String.format("\"dataHoraVenda\":\"%s\"", dto.get(0).getData().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))));
+		assertTrue(jsonRetorno.contains(String.format("\"dataHoraVenda\":\"%s\"", dto.get(1).getData().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))));
 		assertTrue(jsonRetorno.contains(String.format("\"valorTotal\":%s", dto.get(0).getValorTotal().toString())));
 		assertTrue(jsonRetorno.contains(String.format("\"valorTotal\":%s", dto.get(1).getValorTotal().toString())));
 		assertTrue(jsonRetorno.contains(String.format("\"valorCashback\":%s", dto.get(0).getValorCashback().toString())));

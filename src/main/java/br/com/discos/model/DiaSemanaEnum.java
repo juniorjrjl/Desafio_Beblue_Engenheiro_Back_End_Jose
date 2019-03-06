@@ -1,5 +1,7 @@
 package br.com.discos.model;
 
+import java.time.DayOfWeek;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,13 +9,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DiaSemanaEnum {
 
-	DOMINGO(1),
-	SEGUNDA(2),
-	TERCA(3),
-	QUARTA(4),
-	QUINTA(5),
-	SEXTA(6),
-	SABADO(7);
+	DOMINGO(DayOfWeek.SUNDAY.getValue()),
+	SEGUNDA(DayOfWeek.MONDAY.getValue()),
+	TERCA(DayOfWeek.THURSDAY.getValue()),
+	QUARTA(DayOfWeek.WEDNESDAY.getValue()),
+	QUINTA(DayOfWeek.TUESDAY.getValue()),
+	SEXTA(DayOfWeek.FRIDAY.getValue()),
+	SABADO(DayOfWeek.SATURDAY.getValue());
 	
 	private int codigo;
 	

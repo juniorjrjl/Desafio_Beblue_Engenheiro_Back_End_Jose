@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -56,7 +56,7 @@ public class VendaServiceTest {
 	
 	@BeforeEach
 	public void setUp() throws Exception {
-		when(vendaRepository.buscarPorCodigo(1l)).thenReturn(new VendaDetalheDTO(1l, LocalDateTime.now()));
+		when(vendaRepository.buscarPorCodigo(1l)).thenReturn(new VendaDetalheDTO(1l, LocalDate.now()));
 		when(itemVendaRepository.buscarTotaisItemVenda(Mockito.longThat(a -> a != 2l))).thenReturn(retornoTotails);
 		when(itemVendaRepository.listarItensVendaPorCodigoVenda(Mockito.longThat(a -> a != 2l))).thenReturn(Stream.of(
 				new ItemVendaDetalheDTO(1, 5l, new BigDecimal(49.89), new BigDecimal(7.3), 1l, "disco 1", 1l, DiaSemanaEnum.DOMINGO),
@@ -64,14 +64,14 @@ public class VendaServiceTest {
 				new ItemVendaDetalheDTO(1, 20l, new BigDecimal(9.56), new BigDecimal(0.05), 3l, "disco 3", 3l, DiaSemanaEnum.DOMINGO)
 				).collect(Collectors.toList()));
 		
-		when(vendaRepository.buscarPorCodigo(2l)).thenReturn(new VendaDetalheDTO(2l, LocalDateTime.now()));
+		when(vendaRepository.buscarPorCodigo(2l)).thenReturn(new VendaDetalheDTO(2l, LocalDate.now()));
 		when(itemVendaRepository.buscarTotaisItemVenda(2l)).thenReturn(null);
 		when(itemVendaRepository.listarItensVendaPorCodigoVenda(2l)).thenReturn(null);
 		
 		when(vendaRepository.listar(Mockito.any(Pageable.class), Mockito.any(FiltroListagemVenda.class)))
 			.thenReturn(new PageImpl<VendaListagemDTO>(Stream.of(
-					new VendaListagemDTO(3l, LocalDateTime.now()),
-					new VendaListagemDTO(4l, LocalDateTime.now())
+					new VendaListagemDTO(3l, LocalDate.now()),
+					new VendaListagemDTO(4l, LocalDate.now())
 					).collect(Collectors.toList())));
 	}
 	

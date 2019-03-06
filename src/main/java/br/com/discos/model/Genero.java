@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,8 +31,6 @@ public class Genero {
 	@Column
 	private long codigo;
 	
-	@Size(min = 1, max = 200)
-	@NotNull
 	@Column(nullable = false, length = 200)
 	private String nome;
 	

@@ -2,12 +2,11 @@ package br.com.discos.teste.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-
 
 import br.com.discos.model.Cashback;
 import br.com.discos.model.DiaSemanaEnum;
@@ -62,8 +61,8 @@ public class GeracaoDadosUtil {
 		List<Venda> vendas = new ArrayList<Venda>();
 		for (int i = 0; i < quantidade; i++) {
 			Venda venda = new Venda();
-			LocalDateTime dataVenda = LocalDateTime.of(2018, 1, new Random().nextInt(30) + 1, 0, 0, 0);
-			venda.setDataHoraVenda(dataVenda);
+			LocalDate dataVenda = LocalDate.of(2018, 1, new Random().nextInt(30) + 1);
+			venda.setData(dataVenda);
 			List<ItemVenda> itensVenda = new ArrayList<ItemVenda>();
 			for (int z = 0; z < 2; z ++) {
 				ItemVenda itemVenda = new ItemVenda();

@@ -1,28 +1,27 @@
 package br.com.discos.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @NoArgsConstructor
 @Getter @Setter
 public class VendaListagemDTO {
 
 	private long codigo;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime dataHoraVenda;
+	private LocalDate data;
 	private BigDecimal valorTotal;
 	private BigDecimal valorCashback;
 	
-	public VendaListagemDTO(long codigo, LocalDateTime dataHoraVenda) {
+	public VendaListagemDTO(long codigo, LocalDate data) {
 		super();
 		this.codigo = codigo;
-		this.dataHoraVenda = dataHoraVenda;
+		this.data = data;
 	}
 	
 }

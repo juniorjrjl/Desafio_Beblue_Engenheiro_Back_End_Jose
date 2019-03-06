@@ -7,7 +7,9 @@ import br.com.discos.model.DiaSemanaEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @NoArgsConstructor
 @Getter @Setter
 public class ItemVendaDetalheDTO {

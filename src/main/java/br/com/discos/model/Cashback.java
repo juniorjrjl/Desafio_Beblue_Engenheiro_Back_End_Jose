@@ -12,9 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,17 +32,12 @@ public class Cashback {
 	@Column
 	private long codigo;
 	
-	@NotNull
-	@Min(value = 0)
-	@Max(value = 100)
 	@Column(nullable = false, precision = 5, scale  = 2)
 	private BigDecimal porcentagem;
 	
-	@NotNull
 	@Enumerated(EnumType.ORDINAL)
 	private DiaSemanaEnum dia;
 	
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "codigo_genero", nullable = false)
 	private Genero genero = new Genero();

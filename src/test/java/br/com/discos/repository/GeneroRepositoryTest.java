@@ -1,8 +1,10 @@
 package br.com.discos.repository;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import br.com.discos.dto.GeneroListagemDTO;
 import br.com.discos.model.Cashback;
 import br.com.discos.model.DiaSemanaEnum;
 import br.com.discos.model.Disco;
@@ -69,6 +72,12 @@ public class GeneroRepositoryTest{
 	@Test
 	public void QuandoExcluirGeneroComCashback_DispararException() {
 		assertThrows(Exception.class, () -> generoRepository.deleteAll());
+	}
+	
+	@Test
+	public void buscandoListaDiscos() {
+		List<GeneroListagemDTO> dto = generoRepository.buscarNomesCodigos();
+		assertFalse(dto.isEmpty());
 	}
 	
 }
