@@ -22,7 +22,7 @@ public class DiscoResource {
 	@Autowired
 	private DiscoService discoService;
 	
-	@GetMapping("/")
+	@GetMapping
 	public ResponseEntity<Page<DiscoListagemDTO>> listar(@Param("codigoGenero") Long codigoGenero, Pageable pagable){
 		try {
 			Page<DiscoListagemDTO> dto = discoService.listar(pagable, (codigoGenero != null)? codigoGenero.longValue() : 0l);

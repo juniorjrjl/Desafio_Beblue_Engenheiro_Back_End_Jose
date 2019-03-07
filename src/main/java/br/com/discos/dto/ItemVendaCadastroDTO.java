@@ -17,6 +17,7 @@ public class ItemVendaCadastroDTO {
 	@Min(value = 1)
 	public long quantidade;
 	
+	@Min(value = 1)
 	public long codigoDisco;
 	
 }
