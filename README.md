@@ -1,6 +1,5 @@
-# Instruções para rodar o projeto
 
-# Requisitos para rodar o projeto:
+# Pré-requisitos para rodar o projeto:
 
 Uma das dependências do projeto (org.projectlombok:lombok) exige configuração da IDE, segue o link do site da lib: https://projectlombok.org,
 Para o Eclipse siga as seguintes instruções (realize os passos a seguir com a IDE fechada), caso contrário visite o site e procure pela configuração de sua IDE:
@@ -33,16 +32,4 @@ Para o Eclipse siga as seguintes instruções (realize os passos a seguir com a 
 # Ambiente de testes:
 
 * O ambiente está configurado para usar o banco H2 que consta em suas dependências
-
-# Endpoits da aplicação
-
-* consulta de discos pagináda: GET /discos?page={pagina}&size={tamanhoPagina}&codigoGenero={codigoGenero}
-
-* consulta de disco pelo codigo: GET /discos/{codigo}
-
-* consulta de vendas paginada: GET /vendas?page{pagina}&limit=20&dataInicial={"yyyy-MM-dd" opcional}$dataFinal={"yyyy-MM-dd" opcional}
-
-* consulta de venda por codigo: GET /vendas/1
-
-* criar uma nova venda: POST /vendas
 
